@@ -1,7 +1,7 @@
 /***
- * Name: 
- * ID:
- * Section: 
+ * Name: CHEUNG King Hung
+ * ID:21237379
+ * Section: 2
  *
  * Disclaimer: I have not committed any form of plagiarism. I did not disclose any
  *             part of my code to my classmate. I did not upload my code to any 
@@ -31,7 +31,16 @@ public class Sudoku {
      *              should contains the number on i-th row, scanned from left to right.
      */
     int[][] arrayTo2D(int [][][] array) {
-	    //TODO
+        //TODO
+        int [][] twoDimensionArray = new int[9][9];
+        for (int i = 0; i < array.length; i++) {
+            for (int j = 0; j < array[i].length; j++) {
+                for (int k = 0; k < array[i][j].length; k++) {
+                    twoDimensionArray[i / array[i].length * array[i][j].length + j][i % array[i].length * array[i][j].length + k] = array[i][j][k];
+                }
+            }
+        }
+        return twoDimensionArray;
     }
 
 
@@ -44,6 +53,53 @@ public class Sudoku {
      */
     boolean checkBoxLogic(int[][] cellsOfBox) {
 	    //TODO
+        //done
+        int[] count = new int[10];
+        boolean isOk = true;
+        for (int i = 0; i < cellsOfBox.length; i++) {
+            for (int j = 0; j < cellsOfBox[i].length; j++) {
+                switch (cellsOfBox[i][j]){
+                    case 1:
+                        count[1]++;
+                        break;
+                    case 2:
+                        count[2]++;
+                        break;
+                    case 3:
+                        count[3]++;
+                        break;
+                    case 4:
+                        count[4]++;
+                        break;
+                    case 5:
+                        count[5]++;
+                        break;
+                    case 6:
+                        count[6]++;
+                        break;
+                    case 7:
+                        count[7]++;
+                        break;
+                    case 8:
+                        count[8]++;
+                        break;
+                    case 9:
+                        count[9]++;
+                        break;
+                    case 0:
+                        count[0]++;
+                        break;
+                    default:
+                }
+            }
+            for (int j = 1; j < count.length; j++) {
+                if (count[j] > 1) {
+                    isOk = false;
+                    break;
+                }
+            }
+        }
+        return isOk;
     }
 
     /**
@@ -55,6 +111,50 @@ public class Sudoku {
      */
     boolean checkLineLogic(int[] cellsOfLine) {
 	    // TODO
+        int[] count = new int[10];
+        boolean isOk = true;
+        for (int i:cellsOfLine) {
+            switch (i){
+                case 1:
+                    count[1]++;
+                    break;
+                case 2:
+                    count[2]++;
+                    break;
+                case 3:
+                    count[3]++;
+                    break;
+                case 4:
+                    count[4]++;
+                    break;
+                case 5:
+                    count[5]++;
+                    break;
+                case 6:
+                    count[6]++;
+                    break;
+                case 7:
+                    count[7]++;
+                    break;
+                case 8:
+                    count[8]++;
+                    break;
+                case 9:
+                    count[9]++;
+                    break;
+                case 0:
+                    count[0]++;
+                    break;
+                default:
+                }
+            }
+        for (int j = 1; j < count.length; j++) {
+            if (count[j] > 1) {
+                isOk = false;
+                break;
+            }
+        }
+        return isOk;
     }
 
     /**
@@ -64,6 +164,18 @@ public class Sudoku {
      */
     boolean isValid(int[][][] cells) {
 	    //TODO
+        boolean isOk = true;
+        int[][] twoDArray = arrayTo2D(cells);
+        for (int[] ints : twoDArray) {
+            if (!checkLineLogic(ints))
+                isOk = false;
+        }
+        for (int[][] sudoku : cells) {
+            if (!checkBoxLogic(sudoku))
+                isOk =  false;
+        }
+        return isOk;
+
     }
 
 
@@ -75,6 +187,22 @@ public class Sudoku {
      */
     boolean checkWin(int[][][] cells) {
 	    //TODO
+        boolean isOk = true;
+        if (!isValid(cells)){
+            isOk = false;
+        }
+        else{
+            for (int i = 0; i < cells.length; i++) {
+                for (int j = 0; j < cells[i].length; j++) {
+                    for (int k = 0; k < cells[i][j].length; k++) {
+                        if (cells[i][j][k] == 0){
+                            isOk = false;
+                        }
+                    }
+                }
+            }
+        }
+        return isOk;
     }
 
     /**
@@ -85,7 +213,12 @@ public class Sudoku {
      * @return a filename picked by user.
      */
     String filePicking() {
-	    //TODO
+        //TODO
+        System.out.print("Please enter a filename: ");
+        Scanner sc = new Scanner(System.in);
+        String filename = "";
+        filename = sc.next();
+        return filename;
     }
 
 
@@ -98,7 +231,22 @@ public class Sudoku {
         System.out.println("Help Menu:");
         System.out.println("------------------");
         System.out.println("q\t\tQuit the program");
-        System.out.println("This is part of the solution. Please work on your own");
+        //System.out.println("This is part of the solution. Please work on your own");
+        System.out.println("------------------");
+        System.out.println("w\t\tMove to upper cell");
+        System.out.println("------------------");
+        System.out.println("a\t\tMove to left cell");
+        System.out.println("------------------");
+        System.out.println("s\t\tMove to lower cell");
+        System.out.println("------------------");
+        System.out.println("d\t\tMove to Right cell");
+        System.out.println("------------------");
+        System.out.println("c\t\tGet hits");
+        System.out.println("------------------");
+        System.out.println(".\t\tClean current cell");
+        System.out.println("------------------");
+        System.out.println("1-9\tInput number into cell");
+
     }
 
 
@@ -114,6 +262,45 @@ public class Sudoku {
      */
     void advancePrint(int[][][] cells, int row, int col) {
         //TODO
+        int[][] twoDArray = arrayTo2D(cells);
+        for (int i = 0; i < twoDArray.length; i++) {
+            if (i % 3 ==0){
+                System.out.print("\u253c");
+                for (int j = 0; j < 3; j++) {
+                    System.out.print("\t\u2500\t\u2500\t\u2500\t\u253c");
+                }
+                System.out.println();
+            }
+            for (int j = 0; j < twoDArray[i].length; j++) {
+                if (j % 3 ==0){
+                    System.out.print("\u2502\t");
+                }
+
+                if (twoDArray[i][j] == 0 && row == i && col == j){
+                    System.out.print('\u25aa');
+                    System.out.print("\t");
+                }else if (twoDArray[i][j] == 0){
+                    System.out.print('\u2800');
+                    System.out.print("\t");
+                }else if (row == i && col == j){
+                    char c = '\u2080';
+                    for (int k = 0; k < twoDArray[i][j]; k++) {
+                        c++;
+                    }
+                    System.out.print(c);
+                    System.out.print("\t");
+                }else {
+                    System.out.print(twoDArray[i][j]+"\t");
+                }
+
+            }
+            System.out.println("\u2502");
+        }
+        System.out.print("\u253c");
+        for (int j = 0; j < 3; j++) {
+            System.out.print("\t\u2500\t\u2500\t\u2500\t\u253c");
+        }
+        System.out.println();
     }
 
     /**
@@ -126,6 +313,11 @@ public class Sudoku {
      */
     void mark(int row, int col, int[][][] cells, char s) {
         //TODO
+        try {
+            cells[(row / 3 * 3) + col /3][row % 3][col % 3] = Integer.parseInt(String.valueOf(s));
+        }catch (NumberFormatException e){
+            return;
+        }
     }
 
    /**
@@ -141,6 +333,17 @@ public class Sudoku {
      */
     boolean same(int[][][]cells, int[][][]originals) {
         //TODO
+        boolean isOk = true;
+        for (int i = 0; i < cells.length; i++) {
+            for (int j = 0; j < cells[i].length; j++) {
+                for (int k = 0; k < cells[i][j].length; k++) {
+                    if (originals[i][j][k] != 0 && originals[i][j][k] != cells[i][j][k]){
+                        isOk =  false;
+                    }
+                }
+            }
+        }
+        return isOk;
     }
 
 
